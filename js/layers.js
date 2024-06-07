@@ -20,6 +20,11 @@ addLayer("H", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
+    upgrades: {
+        11: {title: "Whole buncha apples.",
+        description: "Doubles your point gain",
+        cost: new Decimal(1),},
+        },
     row: 0, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "h", description: "H: Reset for honesty points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
