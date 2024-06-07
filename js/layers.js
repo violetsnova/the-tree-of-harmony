@@ -13,18 +13,19 @@ addLayer("h", {
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     exponent: 0.5, // Prestige currency exponent
-    gainMult() { // Calculate the multiplier for main currency from bonuses
-        mult = new Decimal(1)
+    gainMult() {
+        let mult = new Decimal(1)
+        if (hasUpgrade('h', 13)) mult = mult.times(upgradeEffect('h', 13))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
     upgrades: {
-        11: {title: "Whole buncha apples.",
+        11: {title: "Whole buncha apples",
         description: "Doubles your point gain",
         cost: new Decimal(1),},
-        12: {title: "Bag of apple seeds.",
+        12: {title: "Bag of apple seeds",
             description: "Scales effect based on honesty points.",
             cost: new Decimal(2),
             effect() {
@@ -32,6 +33,13 @@ addLayer("h", {
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
+        13: {title: "Honest Advertising",
+            description: "Ponies boost honesty poin gain.",
+            cost: new Decimal(10),
+            effect() {
+                return player.points.add(1).pow(0.15)
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },  },
         },
     row: 0, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
