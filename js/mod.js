@@ -13,7 +13,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.7",
+	num: "0.1",
 	name: "Honestly, nothing.",
 }
 
@@ -45,6 +45,7 @@ function getPointGen() {
 	let gain = new Decimal(1)
 	if (hasUpgrade('h', 11)) gain = gain.times(2)
 	if (hasUpgrade('h', 12)) gain = gain.times(upgradeEffect('h', 12))
+		if (hasUpgrade('h', 14)) gain = gain.times(2)
 	return gain
 }
 

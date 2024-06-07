@@ -22,10 +22,10 @@ addLayer("h", {
         return new Decimal(1)
     },
     upgrades: {
-        11: {title: "Whole buncha apples",
-        description: "Doubles your point gain",
+        11: {title: "Whole Buncha Apples",
+        description: "Doubles your pony gain",
         cost: new Decimal(1),},
-        12: {title: "Bag of apple seeds",
+        12: {title: "Takin' The Core",
             description: "Scales effect based on honesty points.",
             cost: new Decimal(2),
             effect() {
@@ -34,12 +34,16 @@ addLayer("h", {
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
         13: {title: "Honest Advertising",
-            description: "Ponies boost honesty poin gain.",
+            description: "Ponies boost honesty point gain.",
             cost: new Decimal(10),
             effect() {
                 return player.points.add(1).pow(0.15)
             },
             effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },  },
+        14: {title: "Sturdy Work Ethic",
+            description: "Doubles pony gain. Again.",
+            cost: new Decimal(25),
+ },
         },
     row: 0, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
