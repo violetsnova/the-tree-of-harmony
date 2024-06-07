@@ -21,10 +21,11 @@ addLayer("h", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
-    upgrades: {
-        11: {title: "Whole Buncha Apples",
-        description: "Doubles your pony gain",
-        cost: new Decimal(1),},
+        upgrades: {
+         11: {title: "Whole Buncha Apples",
+            description: "Doubles your pony gain",
+            cost: new Decimal(1),
+    },
         12: {title: "Takin' The Core",
             description: "Scales effect based on honesty points.",
             cost: new Decimal(2),
@@ -44,10 +45,48 @@ addLayer("h", {
             description: "Doubles pony gain. Again.",
             cost: new Decimal(25),
  },
+        15: {title: "Apple Orchard Expansion (DOESN'T WORK YET)",
+            description:"Increases 'Whole Buncha Apples' by pony gain.",
+            cost: new Decimal(50),  
+            
+ }
         },
     row: 0, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "h", description: "H: Reset for honesty points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true}
+})
+
+addLayer("g", {
+    name: "Generosity",
+    symbol: '<img src="resources/generosity.png" style="width: 90px; height: 90px;" />',
+    position: 0,
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "#733089",
+    requires: new Decimal(150),
+    resource: "generosity points",
+    baseResource: "honesty points",
+    baseAmount() {return player.points},
+    type: "normal",
+    gainMult() {
+        return new Decimal(1)
+    },
+    gainExp() {
+        return new Decimal(1)
+    },
+    layerShown() { return false },
+    row: 1,
+    hotkeys: [
+        {key: "g", description: "g: Reset for generosity points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+    ], 
+    upgrades: {
+        11: {title: "Giving Back",
+            description: "Automatically gain 10% of your Honesty Points on Reset",
+            cost: new Decimal(1),
+        },
+}
 })
