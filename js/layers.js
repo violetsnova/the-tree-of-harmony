@@ -1,12 +1,12 @@
 addLayer("h", {
     name: "Honesty", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: '<img src="GitHub\the-unnamed-tree\resources\honesty.png" />', // This appears on the layer's node. Default is the id with the first letter capitalized
+    symbol: '<img src="resources/honesty.png" style="width: 75px; height: 75px;" />', // This appears on the layer's node. Default is the id with the first letter capitalized
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
     }},
-    color: "#4BDC13",
+    color: "#AF3911",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "honesty points", // Name of prestige currency
     baseResource: "ponies", // Name of resource prestige is based on
