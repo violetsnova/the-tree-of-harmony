@@ -77,11 +77,11 @@ addLayer("h", {
             },
             23: {
                 title: "Roots Run Deep",
-                description: "Each Honesty point increases the effectiveness of all other upgrades by 1%.",
+                description: "Each Honesty point increases the effectiveness of all other upgrades by .1%.",
                 cost: new Decimal(250),
                 effect() {
                     let honestyPoints = player.h.points || new Decimal(0); // get honesty points
-                    return honestyPoints.times(0.01).plus(1); // calculate upgrade effectiveness multiplier
+                    return honestyPoints.times(0.001).plus(1); // calculate upgrade effectiveness multiplier
                 },
                 effectDisplay() { return format(this.effect()) + "x"; } // displays the multiplier
             },
