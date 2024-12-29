@@ -21,6 +21,11 @@ addLayer("h", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
+    getPointGain() {
+        // base gain is 1; applies gainMult() modifiers
+        return new Decimal(1).times(tmp.h.gainMult);
+    },
+
         upgrades: {
          11: {title: "Whole Buncha Apples",
             description: "Doubles your pony gain",
@@ -45,17 +50,47 @@ addLayer("h", {
             description: "Doubles pony gain. Again.",
             cost: new Decimal(25),
  },
-        15: {title: "Apple Orchard Expansion (DOESN'T WORK YET)",
-            description:"Increases 'Whole Buncha Apples' by pony gain.",
-            cost: new Decimal(50),  
+        15: {title: "Apple Orchard Expansion",
+            description:"Increases pony gain by 1% per honesty point.",
+            cost: new Decimal(50),
+            effect() {
+                let honestyPoints = player.h.points || new Decimal(0); // get honesty points
+                return honestyPoints.times(0.01).plus(1); // 1% boost per honesty point
+            },
+            effectDisplay() { return format(this.effect()) + "x"; } // shows multiplier in the UI
             
- }
+ },
+            21: {
+                title: "Open A Market (NOT WORKING YET)",
+                description: "Gain passive Honesty points equal to 5% of your current Honesty point gain.",
+                cost: new Decimal(0),
+                
+            },
+        22: {title: "No Shortcuts",
+            description: "Boosts pony gain by 25% for every 100 honesty points.",
+            cost: new Decimal(200),
+            effect() {
+                let honestyPoints = player.h.points || new Decimal(0); // get honesty points
+                return honestyPoints.div(100).floor().times(0.25).plus(1); // calculate boost
+            },
+            effectDisplay() { return format(this.effect()) + "x"; }, // displays the multiplier
+            },
+            23: {
+                title: "Roots Run Deep",
+                description: "Each Honesty point increases the effectiveness of all other upgrades by 1%.",
+                cost: new Decimal(250),
+                effect() {
+                    let honestyPoints = player.h.points || new Decimal(0); // get honesty points
+                    return honestyPoints.times(0.01).plus(1); // calculate upgrade effectiveness multiplier
+                },
+                effectDisplay() { return format(this.effect()) + "x"; } // displays the multiplier
+            },
         },
     row: 0, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "h", description: "H: Reset for honesty points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true}
+    layerShown(){return true},
 })
 
 addLayer("g", {
@@ -63,11 +98,11 @@ addLayer("g", {
     symbol: '<img src="resources/generosity.png" style="width: 90px; height: 90px;" />',
     position: 0,
     startData() { return {
-        unlocked: true,
+        unlocked: false,
 		points: new Decimal(0),
     }},
     color: "#733089",
-    requires: new Decimal(150),
+    requires: new Decimal(1000),
     resource: "generosity points",
     baseResource: "honesty points",
     baseAmount() {return player.points},
@@ -78,14 +113,14 @@ addLayer("g", {
     gainExp() {
         return new Decimal(1)
     },
-    layerShown() { return false },
+    layerShown() { return true },
     row: 1,
     hotkeys: [
         {key: "g", description: "g: Reset for generosity points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ], 
     upgrades: {
         11: {title: "Giving Back",
-            description: "Automatically gain 10% of your Honesty Points on Reset",
+            description: "nothin atm",
             cost: new Decimal(1),
         },
 }
